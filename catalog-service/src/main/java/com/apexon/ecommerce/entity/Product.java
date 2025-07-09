@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "products")
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -22,14 +23,14 @@ public class Products {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "price", precision = 19, scale = 2)
+    @Column(name = "price", precision = 19, scale = 2, nullable = false)
     private BigDecimal price;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "sub_category_id")
+    private SubCategory subCategory;
 
 }
