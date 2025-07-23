@@ -1,0 +1,35 @@
+@startuml
+skinparam componentStyle rectangle
+
+package "E-Commerce Platform" {
+
+    [API Gateway] --> [Catalog Service]
+    [API Gateway] --> [Order Service]
+    [API Gateway] --> [Payment Service]
+    [API Gateway] --> [Delivery Service]
+    [API Gateway] --> [Vendor Service]
+    [API Gateway] --> [Enhancement Service]
+    [API Gateway] --> [Auth Service]
+
+    [Catalog Service] --> [PostgreSQL - Catalog DB]
+    [Order Service] --> [PostgreSQL - Order DB]
+    [Payment Service] --> [PostgreSQL - Payment DB]
+    [Delivery Service] --> [PostgreSQL - Delivery DB]
+    [Vendor Service] --> [PostgreSQL - Vendor DB]
+    [Enhancement Service] --> [PostgreSQL - Enhancement DB]
+    [Auth Service] --> [PostgreSQL - Auth DB]
+
+    [Order Service] --> [Catalog Service] : fetch product info
+    [Order Service] --> [Payment Service] : initiate payment
+    [Payment Service] --> [Order Service] : payment status
+    [Order Service] --> [Delivery Service] : order placed
+    [Enhancement Service] --> [Order Service] : order history
+    [Enhancement Service] --> [Catalog Service] : recommendations
+
+    [All Services] --> [Kafka/RabbitMQ] : async events
+    [All Services] --> [Redis] : caching
+    [All Services] --> [ELK Stack] : logging
+    [All Services] --> [Prometheus/Grafana] : monitoring
+}
+
+@enduml
